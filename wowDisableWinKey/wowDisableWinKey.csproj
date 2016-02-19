@@ -61,9 +61,13 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gma.UserActivityMonitor, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\UserActivityMonitor\.net45\x64\Gma.UserActivityMonitor.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.3.2.1\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -78,7 +82,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="twpRegwrk, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Packages\Registry worker\twpRegwrk.dll</HintPath>
+      <HintPath>..\packages\Registry worker\x64\twpRegwrk.dll</HintPath>
     </Reference>
     <Reference Include="UIAutomationClient1">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\UIAutomationClient.dll</HintPath>
@@ -161,12 +165,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ScreenMagnet\UserActivityMonitorDLL\Gma.UserActivityMonitor\Gma.UserActivityMonitor.csproj">
-      <Project>{f52aa97e-180a-40ed-8f2b-09080171d6c7}</Project>
-      <Name>Gma.UserActivityMonitor</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="pictures\winlogo_with_message.ico" />

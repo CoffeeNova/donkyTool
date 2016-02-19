@@ -124,18 +124,18 @@ namespace wowDisableWinKey
         /// 
         /// </summary>
         /// <param name="keyValue"></param>
-        /// <param name="keyName"></param>
+        /// <param name="valueName"></param>
         /// <param name="keyLocation"></param>
         /// <param name="keyDefaultValue"></param>
-        internal static void CheckRegistrySettings(ref string keyValue, string keyName, string keyLocation, string keyDefaultValue)
+        internal static void CheckRegistrySettings(ref string keyValue, string valueName, string keyLocation, string keyDefaultValue)
         {
-            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName) != null)
-                keyValue = RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName);
-            else if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.String, keyDefaultValue))
+            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) != null)
+                keyValue = RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName);
+            else if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, valueName, keyDefaultValue))
                 keyValue = keyDefaultValue;
             else
             {
-                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
+                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
                 System.Environment.Exit(0);
             }
         }
@@ -143,30 +143,30 @@ namespace wowDisableWinKey
         /// 
         /// </summary>
         /// <param name="keyValue"></param>
-        /// <param name="keyName"></param>
+        /// <param name="valueName"></param>
         /// <param name="keyLocation"></param>
         /// <param name="keyDefaultValue"></param>
-        internal static void CheckRegistrySettings(ref bool keyValue, string keyName, string keyLocation, bool keyDefaultValue)
+        internal static void CheckRegistrySettings(ref bool keyValue, string valueName, string keyLocation, bool keyDefaultValue)
         {
-            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName) != null)
-                keyValue = RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName) == "true" ? true : false;
-            else if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.String, keyDefaultValue == true ? "true" : "false"))
+            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) != null)
+                keyValue = RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) == "true" ? true : false;
+            else if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, valueName, keyDefaultValue == true ? "true" : "false"))
                 keyValue = keyDefaultValue;
             else
             {
-                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
+                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
                 System.Environment.Exit(0);
             }
         }
-        internal static bool CheckRegistrySettings(bool keyValue, string keyName, string keyLocation, bool keyDefaultValue)
+        internal static bool CheckRegistrySettings(bool keyValue, string valueName, string keyLocation, bool keyDefaultValue)
         {
-            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName) != null)
-                keyValue = RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName) == "true" ? true : false;
-            else if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.String, keyDefaultValue == true ? "true" : "false"))
+            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) != null)
+                keyValue = RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) == "true" ? true : false;
+            else if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, valueName, keyDefaultValue == true ? "true" : "false"))
                 keyValue = keyDefaultValue;
             else
             {
-                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
+                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
                 System.Environment.Exit(0);
             }
             return keyValue;
@@ -175,26 +175,26 @@ namespace wowDisableWinKey
         /// 
         /// </summary>
         /// <param name="keyValue"></param>
-        /// <param name="keyName"></param>
+        /// <param name="valueName"></param>
         /// <param name="keyLocation"></param>
         /// <param name="keyDefaultValue"></param>
-        internal static void CheckRegistrySettings(ref Keys keyValue, string keyName, string keyLocation, Keys keyDefaultValue)
+        internal static void CheckRegistrySettings(ref Keys keyValue, string valueName, string keyLocation, Keys keyDefaultValue)
         {
             try
             {
-                if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName) != null)
-                    keyValue = ConvertFromString(RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName));
-                else if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.String, keyDefaultValue.ToString()))
+                if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) != null)
+                    keyValue = ConvertFromString(RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName));
+                else if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, valueName, keyDefaultValue.ToString()))
                     keyValue = keyDefaultValue;
                 else
                 {
-                    MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
+                    MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
                     System.Environment.Exit(0);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("WRONG VALUE AT HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName);
+                MessageBox.Show("WRONG VALUE AT HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName);
                 System.Environment.Exit(0);
             }
         }
@@ -202,9 +202,9 @@ namespace wowDisableWinKey
         /// 
         /// </summary>
         /// <param name="keyValue"></param>
-        /// <param name="keyName"></param>
+        /// <param name="valueName"></param>
         /// <param name="keyLocation"></param>
-        internal static void CheckRegistrySettings(ref List<GBC_KeyModifier> keyValue, string keyName, string keyLocation, List<GBC_KeyModifier> keyDefaultValue)
+        internal static void CheckRegistrySettings(ref List<GBC_KeyModifier> keyValue, string valueName, string keyLocation, List<GBC_KeyModifier> keyDefaultValue)
         {
             Func<List<GBC_KeyModifier>, string[]> fu = (gbc_list) =>
             {
@@ -214,9 +214,9 @@ namespace wowDisableWinKey
                 return test;
             };
 
-            if (RegistryWorker.GetKeyValue<string[]>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName) != null)
+            if (RegistryWorker.GetKeyValue<string[]>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) != null)
             {
-                string[] keyValueReg = RegistryWorker.GetKeyValue<string[]>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName);
+                string[] keyValueReg = RegistryWorker.GetKeyValue<string[]>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName);
                 Func<string, GBC_KeyModifier> func = (value) =>
                 {
                     GBC_KeyModifier mod;
@@ -262,11 +262,11 @@ namespace wowDisableWinKey
                 foreach (string keyV in keyValueReg)
                     keyValue.Add(func(keyV));
             }
-            else if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.MultiString, fu(keyDefaultValue)))
+            else if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.MultiString, valueName, fu(keyDefaultValue)))
                 keyValue = keyDefaultValue;
             else
             {
-                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
+                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
                 System.Environment.Exit(0);
             }
         }
@@ -274,22 +274,22 @@ namespace wowDisableWinKey
         /// 
         /// </summary>
         /// <param name="keyValue"></param>
-        /// <param name="keyName"></param>
+        /// <param name="valueName"></param>
         /// <param name="keyLocation"></param>
         /// <param name="keyDefaultValue"></param>
-        internal static void CheckRegistrySettings(ref List<InternetBrowser> keyValue, string keyName, string keyLocation, InternetBrowser keyDefaultValue)
+        internal static void CheckRegistrySettings(ref List<InternetBrowser> keyValue, string valueName, string keyLocation, InternetBrowser keyDefaultValue)
         {
-            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName) != null)
+            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) != null)
             {
-                string[] keyValueReg = RegistryWorker.GetKeyValue<string[]>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, keyName);
+                string[] keyValueReg = RegistryWorker.GetKeyValue<string[]>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName);
                 foreach (string keyV in keyValueReg)
                     keyValue.Add(BrowserFromProgid(keyV));
             }
-            else if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.MultiString, new string[] { keyDefaultValue.ToString() }))
+            else if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.MultiString, valueName, new string[] { keyDefaultValue.ToString() }))
                 keyValue.Add(keyDefaultValue);
             else
             {
-                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
+                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
                 System.Environment.Exit(0);
             }
         }
@@ -297,16 +297,16 @@ namespace wowDisableWinKey
         /// 
         /// </summary>
         /// <param name="lastValue"></param>
-        /// <param name="keyName"></param>
+        /// <param name="valueName"></param>
         /// <param name="keyLocation"></param>
         /// <param name="saveValue"></param>
-        internal static void SaveRegistrySettings(ref string lastValue, string keyName, string keyLocation, string saveValue)
+        internal static void SaveRegistrySettings(ref string lastValue, string valueName, string keyLocation, string saveValue)
         {
-            if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.String, saveValue))
+            if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, valueName, saveValue))
                 lastValue = saveValue;
             else
             {
-                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
+                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
                 System.Environment.Exit(0);
             }
         }
@@ -314,18 +314,18 @@ namespace wowDisableWinKey
         /// 
         /// </summary>
         /// <param name="lastValue"></param>
-        /// <param name="keyName"></param>
+        /// <param name="valueName"></param>
         /// <param name="keyLocation"></param>
         /// <param name="saveValue"></param>
-        internal static void SaveRegistrySettings(ref bool lastValue, string keyName, string keyLocation, bool saveValue)
+        internal static void SaveRegistrySettings(ref bool lastValue, string valueName, string keyLocation, bool saveValue)
         {
             if (lastValue == saveValue)
                 return;
-            if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.String, saveValue == true ? "true" : "false"))
+            if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, valueName, saveValue == true ? "true" : "false"))
                 lastValue = saveValue;
             else
             {
-                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + keyName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
+                MessageBox.Show("UNABLE TO USE REGKEY HKEY_LOCAL_MACHINE\\" + keyLocation + "\\" + valueName + " PLEASE TRY TO RUN PROGRAM WITH ADMIN RIGHTS");
                 System.Environment.Exit(0);
             }
         }
@@ -333,7 +333,7 @@ namespace wowDisableWinKey
         {
             if (lastValue == saveValue)
                 return lastValue;
-            if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.String, saveValue == true ? "true" : "false"))
+            if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, keyName, saveValue == true ? "true" : "false"))
                 lastValue = saveValue;
             else
             {
@@ -353,7 +353,7 @@ namespace wowDisableWinKey
         {
             if (lastValue == saveValue)
                 return;
-            if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.String, saveValue.ToString()))
+            if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, keyName, saveValue.ToString()))
                 lastValue = saveValue;
             else
             {
@@ -372,7 +372,7 @@ namespace wowDisableWinKey
         {
             if (lastValue == saveValue)
                 return;
-            if (RegistryWorker.WriteKeyValue(RegistryWorker.WhichRoot.HKEY_LOCAL_MACHINE, keyLocation, keyName, Microsoft.Win32.RegistryValueKind.MultiString, saveValue.Select(x => { return x.ToString(); }).ToArray()))
+            if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.MultiString, keyName, saveValue.Select(x => { return x.ToString(); }).ToArray()))
                 lastValue = saveValue;
             else
             {
