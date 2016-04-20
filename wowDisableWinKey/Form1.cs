@@ -414,16 +414,16 @@ namespace wowDisableWinKey
                     }
                 }
                 // testing current keyboard layout and toggle capslock LED on or off
-                if (CapsLanguageSwitchController.Execute == true)
-                {
-                    uint tpid = Interop.GetWindowThreadProcessId(Interop.GetForegroundWindow(), IntPtr.Zero);
-                    IntPtr hKL = Interop.GetKeyboardLayout(tpid);
-                    hKL = (IntPtr)(hKL.ToInt32() & 0x0000FFFF);
-                    if (hKL == (IntPtr)Const.ENG_LANG_KEYB_LAYOUT)
-                        ToggleLights(Locks.KeyboardCapsLockOn);
-                    else
-                        ToggleLights(Locks.None);
-                }
+                //if (CapsLanguageSwitchController.Execute == true)
+                //{
+                //    uint tpid = Interop.GetWindowThreadProcessId(Interop.GetForegroundWindow(), IntPtr.Zero);
+                //    IntPtr hKL = Interop.GetKeyboardLayout(tpid);
+                //    hKL = (IntPtr)(hKL.ToInt32() & 0x0000FFFF);
+                //    if (hKL == (IntPtr)Const.ENG_LANG_KEYB_LAYOUT)
+                //        ToggleLights(Locks.KeyboardCapsLockOn);
+                //    else
+                //        ToggleLights(Locks.None);
+                //}
                 ////
             }
             catch (Exception ex)
