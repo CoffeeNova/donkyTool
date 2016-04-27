@@ -172,7 +172,7 @@ namespace wowDisableWinKey.Browsers
             // here, you can optionally check if Incognito is enabled:
             var chromeGranddaughter = TreeWalker.RawViewWalker.GetLastChild(chromeDaughter);
             var chromeGreatgranddaughter = chromeGranddaughter.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, ""))[1];
-            var toolbar = chromeGreatgranddaughter.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ToolBar));
+            var toolbar = chromeGreatgranddaughter.FindFirst(TreeScope.Children, new PropertyCondition(AutomationElement.NameProperty, "main"));
             return ExtensionDependLanguage(toolbar);
         }
         /// <summary>
