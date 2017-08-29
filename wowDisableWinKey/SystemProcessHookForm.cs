@@ -36,6 +36,7 @@ namespace wowDisableWinKey
         {
             if (m.Msg == msgNotify)
             {
+                //System.Diagnostics.Debug.WriteLineIf(m.Msg == 15, "MW_PAINT TRAPPED");
                 // Receive shell messages
                 switch ((Interop.ShellEvents)m.WParam.ToInt32())
                 {

@@ -94,11 +94,120 @@ namespace wowDisableWinKey
         private wowDisableWinKey.Controls.BindControl ieBindControl = new Controls.BindControl();
         private SystemProcessHookForm windowWatcher;
 
-        #endregion
-
-        #region private delegates
         //--------------------------private delegates-------------------------------------------//
         delegate void ChangeKeyboradLayoutDelegate(LanguageLayout lanLaym, Locks locks);
+        #endregion
+
+        #region hide1
+        ///// <summary>
+        ///// Delegate for the EnumChildWindows method
+        ///// </summary>
+        ///// <param name="hWnd">Window handle</param>
+        ///// <param name="parameter">Caller-defined variable; we use it for a pointer to our list</param>
+        ///// <returns>True to continue enumerating, false to bail.</returns>
+        //public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr parameter);
+
+        //[DllImport("user32")]
+        //[return: MarshalAs(UnmanagedType.Bool)]
+        //public static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr i);
+
+        ///// <summary>
+        ///// Returns a list of child windows
+        ///// </summary>
+        ///// <param name="parent">Parent of the windows to return</param>
+        ///// <returns>List of child windows</returns>
+        //public static List<IntPtr> GetChildWindows(IntPtr parent)
+        //{
+        //    List<IntPtr> result = new List<IntPtr>();
+        //    GCHandle listHandle = GCHandle.Alloc(result);
+        //    try
+        //    {
+        //        EnumWindowProc childProc = new EnumWindowProc(EnumWindow);
+        //        EnumChildWindows(parent, childProc, GCHandle.ToIntPtr(listHandle));
+        //    }
+        //    finally
+        //    {
+        //        if (listHandle.IsAllocated)
+        //            listHandle.Free();
+        //    }
+        //    return result;
+        //}
+
+        ///// <summary>
+        ///// Callback method to be used when enumerating windows.
+        ///// </summary>
+        ///// <param name="handle">Handle of the next window</param>
+        ///// <param name="pointer">Pointer to a GCHandle that holds a reference to the list to fill</param>
+        ///// <returns>True to continue the enumeration, false to bail</returns>
+        //private static bool EnumWindow(IntPtr handle, IntPtr pointer)
+        //{
+        //    GCHandle gch = GCHandle.FromIntPtr(pointer);
+        //    List<IntPtr> list = gch.Target as List<IntPtr>;
+        //    if (list == null)
+        //    {
+        //        throw new InvalidCastException("GCHandle Target could not be cast as List<IntPtr>");
+        //    }
+        //    list.Add(handle);
+        //    //  You can modify this to check to see if you want to cancel the operation, then return a null here
+        //    return true;
+        //}
+        #endregion
+
+        #region forHandleChromeUrl
+        //public delegate bool EnumWindowsProc(IntPtr hwnd, IntPtr lParam);
+
+        //[DllImport("user32.dll")]
+        //[return: MarshalAs(UnmanagedType.Bool)]
+        //static extern bool EnumChildWindows(IntPtr hwndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+        //[DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        //static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+        //public static bool EnumChildWindowsCallback(IntPtr hWnd, IntPtr lParam)
+        //{
+        //    StringBuilder className = new StringBuilder(256);
+        //    GetClassName(hWnd, className, className.Capacity);
+        //    var windowInformation = new WindowInformation(hWnd, lParam, className.ToString());
+        //    _windowLookupMap[hWnd] = windowInformation;
+        //    if (lParam != IntPtr.Zero)
+        //    {
+        //        _windowLookupMap[lParam]._children.Add(windowInformation);
+        //    }
+        //    EnumChildWindows(hWnd, EnumChildWindowsCallback, hWnd);
+        //    return true;
+        //}
+
+        //class WindowInformation
+        //{
+        //    public IntPtr _parent;
+
+        //    public IntPtr _hWnd;
+
+        //    public string _className;
+
+        //    public List<WindowInformation> _children = new List<WindowInformation>();
+
+        //    public WindowInformation(IntPtr hWnd, IntPtr parent, string className)
+        //    {
+        //        _hWnd = hWnd;
+        //        _parent = parent;
+        //        _className = className;
+        //    }
+        //}
+
+        //static Dictionary<IntPtr, WindowInformation> _windowLookupMap = new Dictionary<IntPtr, WindowInformation>();
+
+        //static void FindWindowsByClass(string className, WindowInformation root, ref  List<WindowInformation> matchingWindows)
+        //{
+        //    if (root._className == className)
+        //    {
+        //        matchingWindows.Add(root);
+        //    }
+        //    foreach (var child in root._children)
+        //    {
+        //        FindWindowsByClass(className, child, ref matchingWindows);
+        //    }
+        //}
         #endregion
 
         public Form1()
@@ -414,16 +523,16 @@ namespace wowDisableWinKey
                     }
                 }
                 // testing current keyboard layout and toggle capslock LED on or off
-                //if (CapsLanguageSwitchController.Execute == true)
-                //{
-                //    uint tpid = Interop.GetWindowThreadProcessId(Interop.GetForegroundWindow(), IntPtr.Zero);
-                //    IntPtr hKL = Interop.GetKeyboardLayout(tpid);
-                //    hKL = (IntPtr)(hKL.ToInt32() & 0x0000FFFF);
-                //    if (hKL == (IntPtr)Const.ENG_LANG_KEYB_LAYOUT)
-                //        ToggleLights(Locks.KeyboardCapsLockOn);
-                //    else
-                //        ToggleLights(Locks.None);
-                //}
+                if (CapsLanguageSwitchController.Execute == true)
+                {
+                    uint tpid = Interop.GetWindowThreadProcessId(Interop.GetForegroundWindow(), IntPtr.Zero);
+                    IntPtr hKL = Interop.GetKeyboardLayout(tpid);
+                    hKL = (IntPtr)(hKL.ToInt32() & 0x0000FFFF);
+                    if (hKL == (IntPtr)Const.ENG_LANG_KEYB_LAYOUT)
+                        ToggleLights(Locks.KeyboardCapsLockOn);
+                    else
+                        ToggleLights(Locks.None);
+                }
                 ////
             }
             catch (Exception ex)
