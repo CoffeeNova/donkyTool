@@ -17,17 +17,15 @@ namespace wowDisableWinKey
         [STAThread]
         static void Main(string[] args)
         {
-
-            Process curProc;
-            Process[] proc;
-            proc = Process.GetProcesses();
-            curProc = Process.GetCurrentProcess();
+            var allProcesses = Process.GetProcesses();
+            var process = Process.GetCurrentProcess();
             _log.Debug("point 0");
-            foreach (Process pr in proc)
+
+            foreach (var proc in allProcesses)
             {
-                if (pr.ProcessName == curProc.ProcessName && pr.Id != curProc.Id)
+                if (proc.ProcessName == process.ProcessName && proc.Id != process.Id)
                 {
-                    pr.Kill();
+                    proc.Kill();
                     _log.Debug("Killed (1)");
                 }
             }

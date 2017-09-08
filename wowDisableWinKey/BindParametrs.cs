@@ -201,74 +201,92 @@ namespace wowDisableWinKey
                 winDetected = true;
         }
 
-        private void ModifierUnregister(Keys key)
+        private void ModifierUnregister(Keys key = default(Keys))
         {
-            if (key == Keys.LShiftKey || key == Keys.RShiftKey)
-                shiftDetected = false;
-            if (key == Keys.LControlKey || key == Keys.RControlKey)
-                controlDetected = false;
-            if (key == Keys.LMenu || key == Keys.RMenu)
-                altDetected = false;
-            if (key == Keys.LWin || key == Keys.RWin)
-                winDetected = false;
+            switch (key)
+            {
+                case Keys.LShiftKey:
+                case Keys.RShiftKey:
+                    shiftDetected = false;
+                    break;
+                case Keys.LControlKey:
+                case Keys.RControlKey:
+                    controlDetected = false;
+                    break;
+                case Keys.LMenu:
+                case Keys.RMenu:
+                    altDetected = false;
+                    break;
+                case Keys.LWin:
+                case Keys.RWin:
+                    winDetected = false;
+                    break;
+                case default(Keys):
+                    shiftDetected = false;
+                    controlDetected = false;
+                    altDetected = false;
+                    winDetected = false;
+                    break;
+            }
         }
-        //
-        internal bool DoBindFunction(Keys _key)
+
+        internal bool DoBindFunction(Keys key)
         {
             //Условие 1: клавиша без модификатора.
-            if (_key == key && !shiftDetected && !controlDetected && !altDetected && !winDetected && bindFunctions.Nomod != null)
+            if (key == this.key && !shiftDetected && !controlDetected && !altDetected && !winDetected && bindFunctions.Nomod != null)
             {
                 bindFunctions.Nomod();
                 return true;
             }
             //Условие 2: клавиша с модификатором shift.
-            if (_key == key && shiftDetected && !controlDetected && !altDetected && !winDetected && bindFunctions.Shiftmod != null)
+            if (key == this.key && shiftDetected && !controlDetected && !altDetected && !winDetected && bindFunctions.Shiftmod != null)
             {
                 bindFunctions.Shiftmod();
                 return true;
             }
             //Условие 3: клавиша с модификатором ctrl.
-            if (_key == key && !shiftDetected && controlDetected && !altDetected && !winDetected && bindFunctions.Controlmod != null)
+            if (key == this.key && !shiftDetected && controlDetected && !altDetected && !winDetected && bindFunctions.Controlmod != null)
             {
                 bindFunctions.Controlmod();
                 return true;
             }
             //Условие 4: клавиша с модификатором alt.
-            if (_key == key && !shiftDetected && !controlDetected && altDetected && !winDetected && bindFunctions.Altmod != null)
+            if (key == this.key && !shiftDetected && !controlDetected && altDetected && !winDetected && bindFunctions.Altmod != null)
             {
                 bindFunctions.Altmod();
                 return true;
             }
             //Условие 5: клавиша с модификатором win.
-            if (_key == key && !shiftDetected && !controlDetected && !altDetected && winDetected && bindFunctions.Winmod != null)
+            if (key == this.key && !shiftDetected && !controlDetected && !altDetected && winDetected && bindFunctions.Winmod != null)
             {
                 bindFunctions.Winmod();
                 return true;
             }
             //Условие 6: клавиша с модификатором ctrl+shift.
-            if (_key == key && shiftDetected && controlDetected && !altDetected && !winDetected && bindFunctions.CtrlShiftmod != null)
+            if (key == this.key && shiftDetected && controlDetected && !altDetected && !winDetected && bindFunctions.CtrlShiftmod != null)
             {
                 bindFunctions.CtrlShiftmod();
                 return true;
             }
             //Условие 7: клавиша с модификатором ctrl+alt.
-            if (_key == key && !shiftDetected && controlDetected && altDetected && !winDetected && bindFunctions.CtrlAltmod != null)
+            if (key == this.key && !shiftDetected && controlDetected && altDetected && !winDetected && bindFunctions.CtrlAltmod != null)
             {
                 bindFunctions.CtrlAltmod();
                 return true;
             }
             //Условие 8: клавиша с модификатором shift+alt.
-            if (_key == key && shiftDetected && !controlDetected && altDetected && !winDetected && bindFunctions.ShiftAltmod != null)
+            if (key == this.key && shiftDetected && !controlDetected && altDetected && !winDetected && bindFunctions.ShiftAltmod != null)
             {
                 bindFunctions.ShiftAltmod();
                 return true;
             }
             //Условие 9: клавиша с модификатором shift+ctrl+alt.
-            if (_key == key && shiftDetected && controlDetected && altDetected && !winDetected && bindFunctions.ShiftCtrlAltmod != null)
+            if (key == this.key && shiftDetected && controlDetected && altDetected && !winDetected && bindFunctions.ShiftCtrlAltmod != null)
             {
                 bindFunctions.ShiftCtrlAltmod();
                 return true;
             }
+            ModifierUnregister();
             return false;
         }
 
