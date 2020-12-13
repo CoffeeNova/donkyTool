@@ -54,7 +54,8 @@ namespace wowDisableWinKey
                 bool hasAdministrativeRight = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
                 string thisProcessName = Process.GetCurrentProcess().ProcessName;
                 string[] prNameSplitted = thisProcessName.Split('.');
-                bool isVisualDebugging = prNameSplitted[prNameSplitted.Length - 1].Contains("vshost");
+                bool isVisualDebugging = prNameSplitted[prNameSplitted.Length - 1].Contains("vshost")
+                    || Debugger.IsAttached;
                 if (!hasAdministrativeRight && !isVisualDebugging)
                 {
                     ProcessStartInfo processInfo = new ProcessStartInfo(); //создаем новый процесс
@@ -84,6 +85,7 @@ namespace wowDisableWinKey
                 }
             }
             catch (Exception ex)
+            
             {
                 _log.Error(ex.Message);
             }
