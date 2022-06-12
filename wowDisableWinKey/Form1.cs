@@ -510,7 +510,7 @@ namespace wowDisableWinKey
                     {
                         KBDLLHOOKSTRUCT objKeyInfo = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(KBDLLHOOKSTRUCT));
                         if (objKeyInfo.key == Keys.CapsLock) //вот тут и блокируется capslock      
-                            return (IntPtr)1;
+                                return (IntPtr)1;
                     }
                     return Interop.CallNextHookEx(ptrHookCapsKey, nCode, wp, lp);
                 });
