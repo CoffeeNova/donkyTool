@@ -38,6 +38,7 @@ namespace wowDisableWinKey
         //--------------------------private variables--------------------------------------------//        
         private bool disableAllGotHook = false;
         private bool capsSwitchEnable = false;
+        private bool langSwitchEnable = false;
         private bool blockWinKey = false;
         private bool disableAll = false;
         private delegate void WssDelegate(SystemProcessHookForm winWatcher, bool state);
@@ -65,10 +66,12 @@ namespace wowDisableWinKey
         private bool wssFirefoxEnable = false;
         private bool wssTorEnable = false;
         private bool wssIEEnable = false;
-        private string wowProcessName = "";
+        private string wowProcessNames = "";
         private uint IOCTL_KEYBOARD_SET_INDICATORS;
         private IntPtr ptrHookWinKey;
+        private IntPtr ptrHookCapsKey;
         private Interop.LowLevelKeyboardProc modifierKeyboardProcess;
+        private Interop.LowLevelKeyboardProc capsModifierKeyboardProcess;
         private Process globalWowProcess = null;
         private Process wowProcess;
         private Process[] allProcesses;
@@ -296,6 +299,7 @@ namespace wowDisableWinKey
             DisableAllFunc();
             BlockWinKeyFunc();
             CapsLangFunc();
+            LangSwitchFunc();
             WebSkypeFunc();
 
             notifyIcon1.MouseClick += new MouseEventHandler(notifyIcon1_MouseClick);
@@ -308,7 +312,7 @@ namespace wowDisableWinKey
         private void ReadSettings()
         {
             //1. Check WoW process name setting
-            Tools.CheckRegistrySettings(ref wowProcessName, Const.WOW_PROCESS_KEY_NAME, Const.SETTINGS_LOCATION, Const.DEFAUL_WOW_PROCESS_NAME);
+            Tools.CheckRegistrySettings(ref wowProcessNames, Const.WOW_PROCESS_KEY_NAME, Const.SETTINGS_LOCATION, string.Join(",", Const.DEFAUL_WOW_PROCESS_NAME));
             //2. Check browser process name setting 
             //Tools.CheckRegistrySettings(ref browserProcessName, Const.BROWSER_PROCESS_KEYNAME, Const.SETTINGS_LOCATION, Const.DEFAULT_BROWSER_PROCESS_NAME);
             //3. Check block windows key setting
@@ -321,6 +325,9 @@ namespace wowDisableWinKey
             Tools.CheckRegistrySettings(ref capsSwitchEnable, Const.CAPS_SWITCH, Const.SETTINGS_LOCATION, false);
             //7. Web skype tab switcher
             WssEnable = Tools.CheckRegistrySettings(WssEnable, Const.WSS, Const.SETTINGS_LOCATION, false);
+            // 8 Langswithch name setting
+            Tools.CheckRegistrySettings(ref langSwitchEnable, Const.LANG_SWITCH, Const.SETTINGS_LOCATION, false);
+
             Tools.CheckRegistrySettings(ref wssChromeEnable, Const.WSS_CHROME, Const.SETTINGS_LOCATION, true);
             Tools.CheckRegistrySettings(ref wssOperaEnable, Const.WSS_OPERA, Const.SETTINGS_LOCATION, false);
             Tools.CheckRegistrySettings(ref wssFirefoxEnable, Const.WSS_FIREFOX, Const.SETTINGS_LOCATION, false);
@@ -453,6 +460,7 @@ namespace wowDisableWinKey
                 disableAllGotHook = false;
             }
         }
+
         private void BlockWinKeyFunc()
         {
             if (disableAll == false && blockWinKey == true && wowProcess != null && ptrHookWinKey == IntPtr.Zero && Tools.GetPlacement(wowProcess.MainWindowHandle).showCmd != ShowWindowCommands.Minimized)
@@ -490,8 +498,59 @@ namespace wowDisableWinKey
 
         private void CapsLangFunc()
         {
-            CapsLanguageSwitchController.Execute = capsSwitchEnable ? true : false;
+            CapsLanguageSwitchController.Execute = capsSwitchEnable;
+
+            if (langSwitchEnable
+                && ptrHookCapsKey == IntPtr.Zero)
+            {
+                ProcessModule objCurrentModule = Process.GetCurrentProcess().MainModule;
+                capsModifierKeyboardProcess = new Interop.LowLevelKeyboardProc((int nCode, IntPtr wp, IntPtr lp) =>
+                {
+                    if (nCode >= 0)
+                    {
+                        KBDLLHOOKSTRUCT objKeyInfo = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(KBDLLHOOKSTRUCT));
+                        if (objKeyInfo.key == Keys.CapsLock) //вот тут и блокируется capslock      
+                            return (IntPtr)1;
+                    }
+                    return Interop.CallNextHookEx(ptrHookCapsKey, nCode, wp, lp);
+                });
+                ptrHookCapsKey = Interop.SetWindowsHookEx(13, capsModifierKeyboardProcess, Interop.GetModuleHandle(objCurrentModule.ModuleName), 0);
+            }
+            else if (ptrHookCapsKey != IntPtr.Zero)
+            {
+                Interop.UnhookWindowsHookEx(ptrHookCapsKey);
+                ptrHookCapsKey = IntPtr.Zero;
+            }
         }
+
+        private void LangSwitchFunc()
+        {
+            if (langSwitchEnable
+                && wowProcess != null
+                && Tools.GetPlacement(wowProcess.MainWindowHandle).showCmd
+                != ShowWindowCommands.Minimized
+                && ptrHookCapsKey == IntPtr.Zero)
+            {
+                ProcessModule objCurrentModule = Process.GetCurrentProcess().MainModule;
+                capsModifierKeyboardProcess = new Interop.LowLevelKeyboardProc((int nCode, IntPtr wp, IntPtr lp) =>
+                {
+                    if (nCode >= 0)
+                    {
+                        KBDLLHOOKSTRUCT objKeyInfo = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(KBDLLHOOKSTRUCT));
+                        if (objKeyInfo.key == Keys.CapsLock) //вот тут и блокируется capslock      
+                            return (IntPtr)1;
+                    }
+                    return Interop.CallNextHookEx(ptrHookCapsKey, nCode, wp, lp);
+                });
+                ptrHookCapsKey = Interop.SetWindowsHookEx(13, capsModifierKeyboardProcess, Interop.GetModuleHandle(objCurrentModule.ModuleName), 0);
+            }
+            else if (ptrHookCapsKey != IntPtr.Zero)
+            {
+                Interop.UnhookWindowsHookEx(ptrHookCapsKey);
+                ptrHookCapsKey = IntPtr.Zero;
+            }
+        }
+
         private void WebSkypeFunc()
         {
             wssChrome.IsActive = wssEnable && wssChromeEnable ? true : false;
@@ -513,9 +572,10 @@ namespace wowDisableWinKey
             wowProcess = null;
             try
             {
-                if (blockWinKey == true)
+                if (blockWinKey == true || capsSwitchEnable)
                 {
-                    allProcesses = Process.GetProcessesByName(wowProcessName);
+                    var wowProcNamesArr = wowProcessNames?.ToLower().Split(',').ToArray();
+                    allProcesses = Process.GetProcesses().Where(x => wowProcNamesArr.Contains(x.ProcessName.ToLower())).ToArray();
                     if (allProcesses.Length != 0)
                     {
                         wowProcess = allProcesses.First();
@@ -533,7 +593,8 @@ namespace wowDisableWinKey
                     else
                         ToggleLights(Locks.None);
                 }
-                ////
+
+                //LangSwitchFunc();
             }
             catch (Exception ex)
             { Console.WriteLine("Form1.1 :" + ex.Message); }
@@ -966,6 +1027,14 @@ namespace wowDisableWinKey
             CapsLangFunc();
         }
 
+        private void langSwitchStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItemsConditionChanger(disableLangSwitch, "LangSwitch Disabled", "LangSwitch Enabled",
+                delegate { Tools.SaveRegistrySettings(ref langSwitchEnable, Const.LANG_SWITCH, Const.SETTINGS_LOCATION, false); },
+                delegate { Tools.SaveRegistrySettings(ref langSwitchEnable, Const.LANG_SWITCH, Const.SETTINGS_LOCATION, true); });
+            LangSwitchFunc();
+        }
+
         private void skypeTabSwitchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToolStripMenuItemsConditionChanger(skypeTabToolStripMenuItem, "SkypeTabSwitch disabled", "SkypeTabSwitch enabled",
@@ -1253,7 +1322,6 @@ namespace wowDisableWinKey
         {
 
         }
-
     }
 
 

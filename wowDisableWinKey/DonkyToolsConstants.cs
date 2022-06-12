@@ -76,7 +76,7 @@ namespace wowDisableWinKey
 
 
 
-        internal const string DEFAUL_WOW_PROCESS_NAME = "Wow-64";
+        internal static readonly string[] DEFAUL_WOW_PROCESS_NAME = { "Wow-64", "WowClassic" };
         internal const string DEFAULT_BROWSER_PROCESS_NAME = "iexplore";
         internal const string CHROME_PROCESS_NAME = "chrome";
         internal const string OPERA_PROCESS_NAME = "opera";
@@ -90,6 +90,7 @@ namespace wowDisableWinKey
         internal const string DISABLE_ALL = "DisableAll";
         internal const string ADR_BAR_LANG = "AdressBarLanguage";
         internal const string CAPS_SWITCH = "CapsSwitch";
+        internal const string LANG_SWITCH = "LangSwitch";
         internal const string WSS = "wss";
         internal const string WSS_CHROME = "wss_gc";
         internal const string WSS_OPERA = "wss_o";

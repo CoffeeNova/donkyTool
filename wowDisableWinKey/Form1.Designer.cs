@@ -56,6 +56,7 @@ namespace wowDisableWinKey
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.globalEventProvider1 = new Gma.UserActivityMonitor.GlobalEventProvider();
+            this.disableLangSwitch = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,12 +65,13 @@ namespace wowDisableWinKey
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.skypeTabToolStripMenuItem,
             this.capsToolStripMenuItem,
+            this.disableLangSwitch,
             this.chromeAdrbarToolStripMenuItem,
             this.conditionToolStripMenuItem,
             this.disableAllToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(160, 158);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 180);
             // 
             // skypeTabToolStripMenuItem
             // 
@@ -81,42 +83,42 @@ namespace wowDisableWinKey
             this.torBrowserToolStripMenuItem,
             this.internetExplorerToolStripMenuItem});
             this.skypeTabToolStripMenuItem.Name = "skypeTabToolStripMenuItem";
-            this.skypeTabToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.skypeTabToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.skypeTabToolStripMenuItem.Text = "SkypeTabSwitch";
             this.skypeTabToolStripMenuItem.Click += new System.EventHandler(this.skypeTabSwitchToolStripMenuItem_Click);
             // 
             // googleChromeToolStripMenuItem
             // 
             this.googleChromeToolStripMenuItem.Name = "googleChromeToolStripMenuItem";
-            this.googleChromeToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.googleChromeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.googleChromeToolStripMenuItem.Text = "Google Chrome";
             this.googleChromeToolStripMenuItem.Click += new System.EventHandler(this.browserMenuItem_Click);
             // 
             // operaToolStripMenuItem
             // 
             this.operaToolStripMenuItem.Name = "operaToolStripMenuItem";
-            this.operaToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.operaToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.operaToolStripMenuItem.Text = "Opera";
             this.operaToolStripMenuItem.Click += new System.EventHandler(this.browserMenuItem_Click);
             // 
             // firefoxToolStripMenuItem
             // 
             this.firefoxToolStripMenuItem.Name = "firefoxToolStripMenuItem";
-            this.firefoxToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.firefoxToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.firefoxToolStripMenuItem.Text = "Firefox";
             this.firefoxToolStripMenuItem.Click += new System.EventHandler(this.browserMenuItem_Click);
             // 
             // torBrowserToolStripMenuItem
             // 
             this.torBrowserToolStripMenuItem.Name = "torBrowserToolStripMenuItem";
-            this.torBrowserToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.torBrowserToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.torBrowserToolStripMenuItem.Text = "Tor Browser";
             this.torBrowserToolStripMenuItem.Click += new System.EventHandler(this.browserMenuItem_Click);
             // 
             // internetExplorerToolStripMenuItem
             // 
             this.internetExplorerToolStripMenuItem.Name = "internetExplorerToolStripMenuItem";
-            this.internetExplorerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.internetExplorerToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.internetExplorerToolStripMenuItem.Text = "Internet Explorer";
             this.internetExplorerToolStripMenuItem.Click += new System.EventHandler(this.browserMenuItem_Click);
             // 
@@ -124,7 +126,7 @@ namespace wowDisableWinKey
             // 
             this.capsToolStripMenuItem.CheckOnClick = true;
             this.capsToolStripMenuItem.Name = "capsToolStripMenuItem";
-            this.capsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.capsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.capsToolStripMenuItem.Text = "CapsSwitch";
             this.capsToolStripMenuItem.Click += new System.EventHandler(this.capsToolStripMenuItem_Click);
             // 
@@ -132,7 +134,7 @@ namespace wowDisableWinKey
             // 
             this.chromeAdrbarToolStripMenuItem.CheckOnClick = true;
             this.chromeAdrbarToolStripMenuItem.Name = "chromeAdrbarToolStripMenuItem";
-            this.chromeAdrbarToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.chromeAdrbarToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.chromeAdrbarToolStripMenuItem.Text = "ChromeAdrbar";
             this.chromeAdrbarToolStripMenuItem.Click += new System.EventHandler(this.chromeAdrbarToolStripMenuItem_Click);
             // 
@@ -140,7 +142,7 @@ namespace wowDisableWinKey
             // 
             this.conditionToolStripMenuItem.CheckOnClick = true;
             this.conditionToolStripMenuItem.Name = "conditionToolStripMenuItem";
-            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.conditionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.conditionToolStripMenuItem.Text = "Condition";
             this.conditionToolStripMenuItem.Click += new System.EventHandler(this.conditionToolStripMenuItem_Click);
             // 
@@ -148,14 +150,14 @@ namespace wowDisableWinKey
             // 
             this.disableAllToolStripMenuItem.CheckOnClick = true;
             this.disableAllToolStripMenuItem.Name = "disableAllToolStripMenuItem";
-            this.disableAllToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.disableAllToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.disableAllToolStripMenuItem.Text = "DisableAll";
             this.disableAllToolStripMenuItem.Click += new System.EventHandler(this.disableAllToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -163,6 +165,14 @@ namespace wowDisableWinKey
             // 
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Visible = true;
+            // 
+            // disableLangSwitch
+            // 
+            this.disableLangSwitch.CheckOnClick = true;
+            this.disableLangSwitch.Name = "disableLangSwitchMenuItem";
+            this.disableLangSwitch.Size = new System.Drawing.Size(180, 22);
+            this.disableLangSwitch.Text = "LangSwitch";
+            this.disableLangSwitch.Click += new System.EventHandler(this.langSwitchStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -201,6 +211,7 @@ namespace wowDisableWinKey
         private System.Windows.Forms.ToolStripMenuItem firefoxToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem torBrowserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem internetExplorerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disableLangSwitch;
         //private System.ComponentModel.ComponentResourceManager resources;
     }
 }
