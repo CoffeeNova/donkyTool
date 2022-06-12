@@ -500,7 +500,7 @@ namespace wowDisableWinKey
         {
             CapsLanguageSwitchController.Execute = capsSwitchEnable;
 
-            if (langSwitchEnable
+            if (!capsSwitchEnable
                 && ptrHookCapsKey == IntPtr.Zero)
             {
                 ProcessModule objCurrentModule = Process.GetCurrentProcess().MainModule;
@@ -525,30 +525,6 @@ namespace wowDisableWinKey
 
         private void LangSwitchFunc()
         {
-            if (langSwitchEnable
-                && wowProcess != null
-                && Tools.GetPlacement(wowProcess.MainWindowHandle).showCmd
-                != ShowWindowCommands.Minimized
-                && ptrHookCapsKey == IntPtr.Zero)
-            {
-                ProcessModule objCurrentModule = Process.GetCurrentProcess().MainModule;
-                capsModifierKeyboardProcess = new Interop.LowLevelKeyboardProc((int nCode, IntPtr wp, IntPtr lp) =>
-                {
-                    if (nCode >= 0)
-                    {
-                        KBDLLHOOKSTRUCT objKeyInfo = (KBDLLHOOKSTRUCT)Marshal.PtrToStructure(lp, typeof(KBDLLHOOKSTRUCT));
-                        if (objKeyInfo.key == Keys.CapsLock) //вот тут и блокируется capslock      
-                            return (IntPtr)1;
-                    }
-                    return Interop.CallNextHookEx(ptrHookCapsKey, nCode, wp, lp);
-                });
-                ptrHookCapsKey = Interop.SetWindowsHookEx(13, capsModifierKeyboardProcess, Interop.GetModuleHandle(objCurrentModule.ModuleName), 0);
-            }
-            else if (ptrHookCapsKey != IntPtr.Zero)
-            {
-                Interop.UnhookWindowsHookEx(ptrHookCapsKey);
-                ptrHookCapsKey = IntPtr.Zero;
-            }
         }
 
         private void WebSkypeFunc()
