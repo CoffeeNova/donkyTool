@@ -130,7 +130,7 @@ namespace wowDisableWinKey
         /// <param name="keyDefaultValue"></param>
         internal static void CheckRegistrySettings(ref string keyValue, string valueName, string keyLocation, string keyDefaultValue)
         {
-            if (RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName) != null)
+            if (GetRegistreKeyValueSafe(keyLocation, valueName) != null)
                 keyValue = RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName);
             else if (RegistryWorker.WriteKeyValue(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, Microsoft.Win32.RegistryValueKind.String, valueName, keyDefaultValue))
                 keyValue = keyDefaultValue;
@@ -140,6 +140,19 @@ namespace wowDisableWinKey
                 System.Environment.Exit(0);
             }
         }
+
+        private static string GetRegistreKeyValueSafe(string keyLocation, string valueName)
+        {
+            try
+            {
+                return RegistryWorker.GetKeyValue<string>(Microsoft.Win32.RegistryHive.LocalMachine, keyLocation, valueName);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
